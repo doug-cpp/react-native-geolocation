@@ -19,7 +19,10 @@ function Cam({ onClose }: { onClose: () => void }) {
   const [isActive, setIsActive] = useState(true);
 
   const codeScanner = useCodeScanner({
-    codeTypes: ['qr', 'ean-13'],  // QR codes e códigos de barras EAN-13
+    // Selecionei apenas QR codes, códigos de barras EAN-13 e EAN-8.
+    // Existem outros tipos de códigos suportados, veja a documentação oficial
+    // aqui: https://react-native-vision-camera.com/docs/guides/code-scanning
+    codeTypes: ['qr', 'ean-13', 'ean-8'],
     onCodeScanned: (codes) => {
       setIsActive(false);
       console.log(`Scanned ${codes.length} codes!`, codes);
