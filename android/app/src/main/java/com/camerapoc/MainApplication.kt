@@ -1,4 +1,4 @@
-package com.qrcodepoc
+package com.camerapoc
 
 import android.app.Application
 import com.facebook.react.PackageList
