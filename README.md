@@ -1,28 +1,22 @@
-# React Native Photo shot/save - Setup and Configuration
+# React Native Geolocation
 
-This project uses [React Native Vision Camera](https://react-native-vision-camera.com/) and [React Native Camera Roll](https://github.com/react-native-cameraroll/react-native-cameraroll), to shot great photos with a high-performance camera and save it in user device.
+## 1. Setup and Configuration
 
-1. Libraries Installation
+This project uses [React Native Geolocation](https://github.com/michalchudziak/react-native-geolocation). The Geolocation API module for React Native that extends the [Geolocation web spec](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation). The library supports TurboModules and also legacy React Native architecture. It is fully compatible with TypeScript and supports modern [Play Services Location API](https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient.html).
 
-Install the Vision Camera library via npm or yarn:
+## 1.1. Library Installation
 
-```bash
-npm install react-native-vision-camera
-
-# or
-yarn add react-native-vision-camera
-```
-
-Install the React Native Camera Roll library via npm or yarn:
+Install the React Native Geolocation library via npm or yarn:
 
 ```bash
-npm install @react-native-camera-roll/camera-roll
+npm install @react-native-community/geolocation
 
 # or
-yarn add @react-native-camera-roll/camera-roll
+yarn add @react-native-community/geolocation
 ```
 
-2. Gradle Version Fix
+## 1.2. Gradle Version Fix
+
 To avoid build issues, fix your Gradle version dependencies in `android/build.gradle` by setting:
 
 ```gradle
@@ -49,6 +43,7 @@ buildscript {
 apply plugin: "com.facebook.react.rootproject"
 
 ```
+
 Also specify distribution URL in android/gradle/wrapper/gradle-wrapper.properties:
 
 ```text
@@ -57,73 +52,55 @@ distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
 
 These verifications ensure compatibility with the Vision Camera native modules.
 
-3. Camera Permissions
+## 1.3. Geolocation Permissions
 
 Permissions must be declared in native configuration files.
 
 Android (`android/app/src/main/AndroidManifest.xml`):
 
 ```xml
-<uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 ```
 
-These allow the app to request and use camera at runtime.
+These allow the app to request and use geolocation at runtime.
 
-4. Basic Usage Example
-
-Use hooks for device and permission management:
+## 1.4. Basic Usage Example
 
 ```tsx
-import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
+import Geolocation from '@react-native-community/geolocation';
 
-const MyCameraComponent = () => {
-  const device = useCameraDevice('back');
-  const { status, requestPermission } = useCameraPermission();
-
-  React.useEffect(() => {
-    if (status !== 'authorized') requestPermission();
-  }, [status]);
-
-  if (!device || status !== 'authorized') return null;
-
-  return (
-    <Camera
-      style={{ flex: 1 }}
-      device={device}
-      isActive={true}
-    />
-  );
-};
+Geolocation.getCurrentPosition(info => console.log(info));
 ```
 
 ---
 
-# Getting Started
+## 2. Getting Started
 
 > **Note**: Make sure you have prepared your environment with the steps described below before proceeding.
 
-## Prerequisites
+## 2.1 Prerequisites
 
 - Node.js (version 18 or higher)
 - Java JDK (version 17 or higher)
 - Android Studio
 - Android device with USB debugging enabled
 
-## Environment Setup
+## 2.2. Environment Setup
 
-### 1. Install Java SDK (JDK)
+### 2.2.1. Install Java SDK (JDK)
 
 - Download and install the latest [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-downloads.html)
 - Set the `JAVA_HOME` environment variable to point to your JDK installation folder
 - Verify installation by running `java -version` in your terminal
 
-### 2. Install Android Studio
+### 2.2.2. Install Android Studio
 
 - Download and install [Android Studio](https://developer.android.com/studio)
 - During installation, include the Android SDK, SDK Platform tools, and Android SDK Build-Tools components
 - Install the necessary SDK packages for React Native development
 
-### 3. Prepare Your Android Device
+### 2.2.3. Prepare Your Android Device
 
 #### Enable Developer Options
 
@@ -150,38 +127,41 @@ adb devices
 
 You should see your device listed. If it shows "unauthorized", check the USB debugging prompt on your device.
 
-## Quick Start
+## 3. Running
 
-### Step 1: Install Dependencies
+### 3.1 Install Dependencies
 
 ```sh
 npm install
 ```
-### Step 2: Start Metro Bundler
+
+### 3.2 Start Metro Bundler
 
 ```sh
 npm start
 ```
+
 Keep this terminal open - Metro will bundle your JavaScript code.
 
-### Step 3: Run on Android Device
+### 3.3 Run on Android Device
 
 ```sh
 npm run android
 ```
+
 This will build and install the app on your connected Android device.
 
 ---
 
-## Development Workflow
+## 4. Development Workflow
 
-### Making Changes
+### 4.1. Making Changes
 
 1. Edit your files (Metro will automatically detect changes)
 2. Save the file - Fast Refresh will update the app instantly
 3. For native changes, you may need to run `npm run android` again
 
-### Common Development Commands
+### 4.2. Common Development Commands
 
 ```sh
 # Start development server
@@ -196,26 +176,14 @@ npm test
 # Lint code
 npm run lint
 ```
+
 ---
 
-# Template Structure
+## 5. Creating a New POC
 
-```text
-src/
-├── App.tsx                 # Main application component
-├── CameraComponent.tsx     # Custom component
-android/                    # Android native code
-├── app/src/main/java/com/meuapp/
-│   ├── MainActivity.kt    # Android main activity
-│   └── MainApplication.kt # Android application class
-```
----
+To create a new POC from this:
 
-# Creating a New POC
-
-To create a new POC from this template:
-
-1. **Copy the template** to a new directory
+1. **Copy this POC** to a new directory
 2. **Update package.json** with your POC name and description
 3. **Add specific dependencies** your POC requires
 4. **Update app.json** with your display name
@@ -224,122 +192,50 @@ To create a new POC from this template:
 
 ---
 
-# Customization Guide
-
-## Adding New Dependencies
+### 5.1. Adding New Dependencies
 
 When creating your specific POC, add necessary dependencies:
 
 ```bash
-# Example for Geo location POC
+# Example for Geolocation POC
 npm install react-native-vision-camera
-
-# Example for Geolocation POC  
-npm install react-native-geolocation-service @react-native-community/geolocation
 ```
 
-## Android Configuration Updates
+### 5.2. Android Configuration Updates
 
 For each new POC, update the following Android files:
 
-1. **`android/app/build.gradle`**:
-    
-    ```gradle  
-    android {
-        defaultConfig {
-            applicationId "com.yourpocname"  // Update this
-        }
+#### **`android/app/build.gradle`**
+
+```gradle  
+android {
+    defaultConfig {
+        applicationId "com.yourpocname"  // Update this
     }
-    ```
-    
-2. **Rename package directory**:
-    
-    ```bash
-    # From:
-    android/app/src/main/java/com/meuapp/
-    
-    # To:
-    android/app/src/main/java/com/yourpocname/
-    ```
-    
-3. **Update package references** in:
-    
-    - `MainActivity.kt`
-    - `MainApplication.kt`
-    - `AndroidManifest.xml`
-
-## Component Development
-
-Create your POC components in the `components/` directory:
-
-```typescript
-// components/YourFeature.tsx
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-
-export default function YourFeature() {
-  return (
-    <View style={styles.container}>
-      <Text>Your POC functionality here</Text>
-    </View>
-  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 ```
+
+#### **Rename package directory**
+
+```bash
+# From:
+android/app/src/main/java/com/meuapp/
+
+# To:
+android/app/src/main/java/com/yourpocname/
+```
+
+#### **Update package references** in
+
+- `MainActivity.kt`
+- `MainApplication.kt`
+- `AndroidManifest.xml`
 
 ---
 
-# App.tsx Template
+## 6. Troubleshooting
 
-```typescript
-// App.tsx - Template base
-import React from 'react';
-import {View, Text, StyleSheet, useColorScheme} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-
-function AppContent() {
-  const isDarkMode = useColorScheme() === 'dark';
-  const textColor = isDarkMode ? 'white' : 'black';
-
-  return (
-    <View style={styles.container}>
-      <Text style={{color: textColor}}>Android POC Base Template</Text>
-      <Text style={{color: textColor}}>Implement your functionality here</Text>
-    </View>
-  );
-}
-
-export default function App() {
-  return (
-    <SafeAreaProvider>
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-```
-
----
-
-# Troubleshooting
-
-## Common Issues
-
-### Device Not Recognized
+### 6.1. Device Not Recognized
 
 ```sh
 # Check if device is connected
@@ -351,7 +247,7 @@ adb devices
 # 3. Revoke USB debugging authorizations in Developer options and reconnect
 ```
 
-### Build Failures
+### 6.2. Build Failures
 
 ```sh
 # Clean Android build
@@ -364,20 +260,20 @@ npm start -- --reset-cache
 rm -rf node_modules && npm install
 ```
 
-### Metro Connection Issues
+### 6.3. Metro Connection Issues
 
 - Ensure Metro is running (`npm start`)
 - Check that device and computer are on same network if using Wi-Fi debugging    
 - For USB: verify proper connection and drivers
 
-### USB Debugging Not Appearing
+### 6.4. USB Debugging Not Appearing
 
 1. Try different USB ports
 2. Use original USB cable
 3. Check if USB debugging is properly enabled
 4. Restart both device and computer if needed
 
-## Useful ADB Commands
+### 6.5. Useful ADB Commands
 
 ```sh
 
@@ -396,23 +292,7 @@ adb install app-debug.apk
 
 ---
 
-# Checklist for New POCs
-
-For each new POC Android:
-
-- `package.json` - name and description
-- `app.json` - name and displayName
-- `android/app/build.gradle` - applicationId
-- Rename folder: `android/app/src/main/java/com/meuapp/` → `android/app/src/main/java/com/[pocname]/`
-- Update package in Kotlin files (`MainActivity.kt`, `MainApplication.kt`)
-- Update `AndroidManifest.xml`
-- `App.tsx` - implement functionality
-- `README.md` - specific documentation
-- Specific dependencies in package.json
-
----
-
-# Learn More
+## 6. Learn More
 
 - [React Native Official Documentation](https://reactnative.dev/docs/getting-started)
 - [Android Developer Setup](https://developer.android.com/studio)

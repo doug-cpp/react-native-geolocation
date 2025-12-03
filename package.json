@@ -1,6 +1,6 @@
 {
   "name": "react-native-geo-location-poc",
-  "displayName": "React Native Geo Location POC",
+  "displayName": "React Native Geolocation POC",
   "description": "POC for get geo location in React Native",
   "version": "0.0.1",
   "private": true,
