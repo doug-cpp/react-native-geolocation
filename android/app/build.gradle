@@ -77,9 +77,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.camerapoc"
+    namespace "com.geolocationpoc"
     defaultConfig {
-        applicationId "com.camerapoc"
+        applicationId "com.geolocationpoc"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

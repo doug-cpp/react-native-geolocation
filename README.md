@@ -231,7 +231,7 @@ To create a new POC from this template:
 When creating your specific POC, add necessary dependencies:
 
 ```bash
-# Example for Camera POC
+# Example for Geo location POC
 npm install react-native-vision-camera
 
 # Example for Geolocation POC  

@@ -5,27 +5,31 @@ import {
   useColorScheme,
   StatusBar,
   Button,
+  View
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import Cam from './CameraComponent';
+import GeoComponent from './GeolocationComponent';
 
 
 function AppContent() {
   const isDarkMode = useColorScheme() === 'dark';
   const textColor = isDarkMode ? 'white' : 'black';
-  const [showCamera, setShowCamera] = useState(false); // camera inicia fechada
+  const [showGeo, setShowGeo] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Text style={{ color: textColor, fontSize: 24 }}>Android POC</Text>
       <Text style={{ color: textColor, fontSize: 16, marginBottom: 20 }}>
-        Tirar foto usando a câmera do dispositivo
+        Obter localização usando o dispositivo
       </Text>
-      {showCamera ? (
-        <Cam onClose={() => setShowCamera(false)} />
+      {showGeo ? (
+        <View style={{ flex: 1, width: '100%' }}>
+          <GeoComponent />
+          <Button title="Fechar" onPress={() => setShowGeo(false)} />
+        </View>
       ) : (
-        <Button title="Abrir Câmera" onPress={() => setShowCamera(true)} />
+        <Button title="Iniciar geolocalização" onPress={() => setShowGeo(true)} />
       )}
     </SafeAreaView>
   );
