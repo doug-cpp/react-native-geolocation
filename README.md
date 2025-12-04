@@ -1,25 +1,79 @@
 # React Native Geolocation
 
-## 1. Setup and Configuration
+## Overview
 
 This project uses [React Native Geolocation](https://github.com/michalchudziak/react-native-geolocation). The Geolocation API module for React Native that extends the [Geolocation web spec](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation). The library supports TurboModules and also legacy React Native architecture. It is fully compatible with TypeScript and supports modern [Play Services Location API](https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient.html).
 
-## 1.1. Library Installation
+## Getting Started
+
+> **Note**: Make sure you have prepared your environment with the steps described below before proceeding.
+
+### Prerequisites
+
+- Node.js (version 18 or higher)
+- Java JDK (version 17 or higher)
+- Android Studio
+- Android device with USB debugging enabled
+
+### Environment Setup
+
+#### Install Java SDK (JDK)
+
+- Download and install the latest [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-downloads.html)
+- Set the `JAVA_HOME` environment variable to point to your JDK installation folder
+- Verify installation by running `java -version` in your terminal
+
+#### Install Android Studio
+
+- Download and install [Android Studio](https://developer.android.com/studio)
+- During installation, include the Android SDK, SDK Platform tools, and Android SDK Build-Tools components
+- Install the necessary SDK packages for React Native development
+
+#### Prepare Your Android Device
+
+##### Enable Developer Options
+
+1. Go to **Settings** \> **About phone**
+2. Tap **Build number** 7 times until you see "You are now a developer!"
+3. Go back to **Settings** \> **Developer options**
+
+##### Enable USB Debugging
+
+1. In **Developer options**, enable **USB debugging**
+2. Connect your device to computer via USB cable
+
+##### Grant USB Debugging Permission
+
+1. When first connecting, you'll see a dialog on your device: **"Allow USB debugging?"**
+2. Check **"Always allow from this computer"** and tap **OK**
+3. If you don't see the prompt, disconnect and reconnect the USB cable
+
+##### Verify Connection
+
+``` sh
+adb devices
+```
+
+You should see your device listed. If it shows "unauthorized", check the USB debugging prompt on your device.
+
+## Setup and Configuration
+
+### Library Installation
 
 Install the React Native Geolocation library via npm or yarn:
 
-```bash
+``` bash
 npm install @react-native-community/geolocation
 
 # or
 yarn add @react-native-community/geolocation
 ```
 
-## 1.2. Gradle Version Fix
+### Gradle Version Fix
 
-To avoid build issues, fix your Gradle version dependencies in `android/build.gradle` by setting:
+To avoid build issues, fix your Gradle version dependencies in `android/build.gradle`:
 
-```gradle
+``` gradle
 buildscript {
     ext {
         buildToolsVersion = "36.0.0"
@@ -34,136 +88,71 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.5.2") 
+        classpath("com.android.tools.build:gradle:8.5.2")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20")
     }
 }
 
 apply plugin: "com.facebook.react.rootproject"
-
 ```
 
-Also specify distribution URL in android/gradle/wrapper/gradle-wrapper.properties:
+Also specify distribution URL in `android/gradle/wrapper/gradle-wrapper.properties`:
 
-```text
+```gradle
 distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
 ```
 
 These verifications ensure compatibility with the Vision Camera native modules.
 
-## 1.3. Geolocation Permissions
-
-Permissions must be declared in native configuration files.
+### Geolocation Permissions
 
 Android (`android/app/src/main/AndroidManifest.xml`):
 
-```xml
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+``` xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 ```
 
-These allow the app to request and use geolocation at runtime.
+### Basic Usage Example
 
-## 1.4. Basic Usage Example
-
-```tsx
+``` tsx
 import Geolocation from '@react-native-community/geolocation';
 
 Geolocation.getCurrentPosition(info => console.log(info));
 ```
 
----
+## Running
 
-## 2. Getting Started
+### Install Dependencies
 
-> **Note**: Make sure you have prepared your environment with the steps described below before proceeding.
-
-## 2.1 Prerequisites
-
-- Node.js (version 18 or higher)
-- Java JDK (version 17 or higher)
-- Android Studio
-- Android device with USB debugging enabled
-
-## 2.2. Environment Setup
-
-### 2.2.1. Install Java SDK (JDK)
-
-- Download and install the latest [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-downloads.html)
-- Set the `JAVA_HOME` environment variable to point to your JDK installation folder
-- Verify installation by running `java -version` in your terminal
-
-### 2.2.2. Install Android Studio
-
-- Download and install [Android Studio](https://developer.android.com/studio)
-- During installation, include the Android SDK, SDK Platform tools, and Android SDK Build-Tools components
-- Install the necessary SDK packages for React Native development
-
-### 2.2.3. Prepare Your Android Device
-
-#### Enable Developer Options
-
-1. Go to **Settings** > **About phone**
-2. Tap **Build number** 7 times until you see "You are now a developer!"
-3. Go back to **Settings** > **Developer options**
-
-#### Enable USB Debugging
-
-1. In **Developer options**, enable **USB debugging**
-2. Connect your device to computer via USB cable
-
-#### Grant USB Debugging Permission
-
-1. When first connecting, you'll see a dialog on your device: **"Allow USB debugging?"**
-2. Check **"Always allow from this computer"** and tap **OK**
-3. If you don't see the prompt, disconnect and reconnect the USB cable
-
-#### Verify Connection
-
-```sh
-adb devices
-```
-
-You should see your device listed. If it shows "unauthorized", check the USB debugging prompt on your device.
-
-## 3. Running
-
-### 3.1 Install Dependencies
-
-```sh
+``` sh
 npm install
 ```
 
-### 3.2 Start Metro Bundler
+### Start Metro Bundler
 
-```sh
+``` sh
 npm start
 ```
 
-Keep this terminal open - Metro will bundle your JavaScript code.
+### Run on Android Device
 
-### 3.3 Run on Android Device
-
-```sh
+``` sh
 npm run android
 ```
 
-This will build and install the app on your connected Android device.
+## Development Workflow
 
----
-
-## 4. Development Workflow
-
-### 4.1. Making Changes
+### Making Changes
 
 1. Edit your files (Metro will automatically detect changes)
-2. Save the file - Fast Refresh will update the app instantly
-3. For native changes, you may need to run `npm run android` again
+2. Save the file — Fast Refresh will update the app instantly
+3. For native changes, you may need to run `npm run android` again
 
-### 4.2. Common Development Commands
+### Common Development Commands
 
-```sh
+``` sh
 # Start development server
 npm start
 
@@ -177,106 +166,65 @@ npm test
 npm run lint
 ```
 
----
-
-## 5. Creating a New POC
+## Creating a New POC
 
 To create a new POC from this:
 
-1. **Copy this POC** to a new directory
-2. **Update package.json** with your POC name and description
-3. **Add specific dependencies** your POC requires
-4. **Update app.json** with your display name
-5. **Rename Android package** from `com.meuapp` to `com.yourpocname`
-6. **Implement your functionality** in `App.tsx` and components
+1. **Copy this POC** to a new directory (`cp -r GeoLocationPOC/ NewPOC/`)
+2. **Update package.json** with your POC name and description
+3. **Add specific dependencies** your POC requires (ex.: `npm install new-lib`)
+4. **Remove unused libs in package.json** (ex.: remove `"@react-native-community/geolocation": "^3.4.0",` line)
+5. **Remove `node_modules/` folder and `package-lock.json` file** (`rm -rf node_modules package-lock.json`)
+6. **Update app.json** with your display name
+7. **Rename directory**: from: `android/app/src/main/java/com/geolocationpoc/` to `android/app/src/main/java/com/newpoc`
+8. **Update package references** from `com.geolocationpoc` to `com.newpoc` (global find and replace)
+9. **Update path references** from `com/geolocationpoc` to `com/newpoc` (global find and replace)
+10. **Implement your functionality** in `App.tsx` and new POC components
 
----
+## Troubleshooting
 
-### 5.1. Adding New Dependencies
+### Device Not Recognized
 
-When creating your specific POC, add necessary dependencies:
-
-```bash
-# Example for Geolocation POC
-npm install react-native-vision-camera
-```
-
-### 5.2. Android Configuration Updates
-
-For each new POC, update the following Android files:
-
-#### **`android/app/build.gradle`**
-
-```gradle  
-android {
-    defaultConfig {
-        applicationId "com.yourpocname"  // Update this
-    }
-}
-```
-
-#### **Rename package directory**
-
-```bash
-# From:
-android/app/src/main/java/com/meuapp/
-
-# To:
-android/app/src/main/java/com/yourpocname/
-```
-
-#### **Update package references** in
-
-- `MainActivity.kt`
-- `MainApplication.kt`
-- `AndroidManifest.xml`
-
----
-
-## 6. Troubleshooting
-
-### 6.1. Device Not Recognized
-
-```sh
+``` sh
 # Check if device is connected
 adb devices
-
-# If device shows "unauthorized":
-# 1. Check USB cable connection
-# 2. Look for USB debugging prompt on device
-# 3. Revoke USB debugging authorizations in Developer options and reconnect
 ```
 
-### 6.2. Build Failures
+#### If device shows "unauthorized"
 
-```sh
+1. Check USB cable connection
+2. Look for USB debugging prompt on device
+3. Revoke USB debugging authorizations in Developer options and reconnect
+
+### Build Failures
+
+``` sh
 # Clean Android build
-cd android && ./gradlew clean
+cd android && ./gradlew clean && cd ..
 
 # Reset Metro cache
 npm start -- --reset-cache
 
-# Reinstall dependencies
-rm -rf node_modules && npm install
+# Full clean and reinstall dependencies
+rm -rf node_modules/ package-lock.json && npm install
 ```
 
-### 6.3. Metro Connection Issues
+### Metro Connection Issues
 
 - Ensure Metro is running (`npm start`)
-- Check that device and computer are on same network if using Wi-Fi debugging    
-- For USB: verify proper connection and drivers
+- Check network when using Wi-Fi debugging
+- Verify USB connection
 
-### 6.4. USB Debugging Not Appearing
+### USB Debugging Not Appearing
 
 1. Try different USB ports
-2. Use original USB cable
-3. Check if USB debugging is properly enabled
+2. Use original device USB cable
+3. Check if USB debugging is properly enabled in your device
 4. Restart both device and computer if needed
 
-### 6.5. Useful ADB Commands
+### Useful ADB Commands
 
-```sh
-
+``` sh
 # List connected devices
 adb devices
 
@@ -290,9 +238,7 @@ adb logcat
 adb install app-debug.apk
 ```
 
----
-
-## 6. Learn More
+## Learn More
 
 - [React Native Official Documentation](https://reactnative.dev/docs/getting-started)
 - [Android Developer Setup](https://developer.android.com/studio)
@@ -301,4 +247,6 @@ adb install app-debug.apk
 
 This template provides a solid foundation for rapid POC development while maintaining code quality and development best practices.
 
-<div align="center"> <br/> Made with ❤️ for React Native Android Development </div><div align="center">⁂</div>
+---
+
+<div align="center"><br/>Made with ❤️ for React Native Android Development<br/>⁂</div>
