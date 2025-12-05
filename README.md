@@ -103,7 +103,7 @@ Also specify distribution URL in `android/gradle/wrapper/gradle-wrapper.properti
 distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
 ```
 
-These verifications ensure compatibility with the Vision Camera native modules.
+These verifications ensure compatibility with the Geolocation native modules.
 
 ### Geolocation Permissions
 
