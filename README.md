@@ -150,6 +150,26 @@ npm run android
 2. Save the file — Fast Refresh will update the app instantly
 3. For native changes, you may need to run `npm run android` again
 
+### Optional: Install to run on device without Metro or USB Connection
+
+If you want to test or demo the POC without relying on a Metro bundler or being physically connected to your computer via USB (for example, in an outdoor environment), you can build and install a standalone release APK.
+
+```bash
+# Go to android directory
+cd android
+
+# Build a release
+./gradlew assembleRelease
+
+# The release APK will be located at:
+# android/app/build/outputs/apk/release/app-release.apk
+
+# With USB device active for now, install the just built release
+adb install app/build/outputs/apk/release/app-release.apk
+```
+
+> Note: This installation is **optional** and intended for use cases where you want to run the app fully independent from your development machine and without any live reload capabilities.
+
 ### Common Development Commands
 
 ``` sh
